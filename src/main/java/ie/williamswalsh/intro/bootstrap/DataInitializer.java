@@ -6,7 +6,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 /**
- * Spring starts the command line runner when the application is started.
+ * Spring starts the command line runner after the application is started.
  */
 @Component
 public class DataInitializer implements CommandLineRunner {
