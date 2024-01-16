@@ -196,3 +196,50 @@ class
   <TEST>
 ```
 
+#### Hibernate DDL Schema Generation tool
+- Create DDL statements & execute DDL statements to create tables from JPA annotated classes.
+- property: hbm2ddl.auto
+- spring boot autoconfigures this property - to automatically generate database tables.
+- can set the table names, column names, types etc.
+- For PROD dbs use Validate or None
+  - validate - startup will fail is db schema is wrong
+  - without errors could occur at runtime
+
+- FlyWay & Liquid base can be used for schema mgmt 
+
+
+#### H2 MySql compatibility mode
+- Can enable H2 to behave like mysql.
+
+#### schema.sql
+- file in classpath(resources) will be executed to setup db.
+- Maven can initialise the db using a schema.sql file in the classpath
+
+#### liquibase
+- migration - moving code from one system to another
+- db migration
+- Need to be able to do them: accurately & repeatably
+- terminology
+  - change set - a set of changes to be applied to db
+  - change - a single change
+  - changelog - lists change sets to be applied
+  - change log params - params that can be changed at runtime
+  - preconditions - condition to apply or not
+  - context - expression - Run script if...
+- best practice - 1 change per change log - easier to handle rollbacks.
+- changes should be additive
+- spring boot runs liquidbase to apply up to latest changesets
+- Way to migrate manual db to liquid base 
+- Liquibase maps the XML changeset file to sql - it interprets the xml to generate valid SQL based on db provider.
+
+#### Liquibase errors
+ 
+- ERROR: could not read a hi value - you need to populate the table: book_seq
+  EXPLANATION: This occurs when the sequence table book_seq doesn't have a starting value
+  FIX: Insert a value into the sequence normally 0 for long sequences.
+
+- ERROR: Book table already exists
+  EXPLANATION: I changed the liquibase script file names which created the book table.
+               Liquibase saw these new files in the master and tried to run them.
+  FIX: Update the DB with the new changelogs names.
+- 

@@ -3,11 +3,13 @@ package ie.williamswalsh.intro.bootstrap;
 import ie.williamswalsh.intro.domain.Book;
 import ie.williamswalsh.intro.repositories.BookRepository;
 import org.springframework.boot.CommandLineRunner;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
 
 /**
  * Spring starts the command line runner after the application is started.
  */
+@Profile({"local", "default"})
 @Component
 public class DataInitializer implements CommandLineRunner {
 
@@ -19,14 +21,16 @@ public class DataInitializer implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
+        bookRepository.deleteAll();
+
         Book bookDDD = new Book("Domain Driven Design", "123", "RandomHouse");
         Book bookSIA = new Book("Spring In action", "234234", "Oreilly");
 
         System.out.println("SIA ID before saving: " + bookSIA.getId());
 
 //        The "saved object ID" will have a value.
-        Book savedDDD = bookRepository.save(bookDDD);
-        Book savedSIA = bookRepository.save(bookSIA);
+        bookRepository.save(bookDDD);
+        bookRepository.save(bookSIA);
 
         System.out.println("SIA ID after saving: " + bookSIA.getId());
 
