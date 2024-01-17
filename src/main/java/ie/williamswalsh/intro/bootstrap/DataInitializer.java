@@ -23,8 +23,8 @@ public class DataInitializer implements CommandLineRunner {
     public void run(String... args) {
         bookRepository.deleteAll();
 
-        Book bookDDD = new Book("Domain Driven Design", "123", "RandomHouse");
-        Book bookSIA = new Book("Spring In action", "234234", "Oreilly");
+        Book bookDDD = new Book("Domain Driven Design", "123", "RandomHouse", null);
+        Book bookSIA = new Book("Spring In action", "234234", "Oreilly", null);
 
         System.out.println("SIA ID before saving: " + bookSIA.getId());
 

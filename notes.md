@@ -213,7 +213,7 @@ class
 
 #### schema.sql
 - file in classpath(resources) will be executed to setup db.
-- Maven can initialise the db using a schema.sql file in the classpath
+- hibernate can initialise the db using a schema.sql file in the classpath - hibernate executes the script
 
 #### liquibase
 - migration - moving code from one system to another
@@ -234,12 +234,58 @@ class
 
 #### Liquibase errors
  
-- ERROR: could not read a hi value - you need to populate the table: book_seq
-  EXPLANATION: This occurs when the sequence table book_seq doesn't have a starting value
+- ERROR: could not read a hi value - you need to populate the table: book_seq  
+  EXPLANATION: This occurs when the sequence table book_seq doesn't have a starting value  
   FIX: Insert a value into the sequence normally 0 for long sequences.
 
-- ERROR: Book table already exists
-  EXPLANATION: I changed the liquibase script file names which created the book table.
-               Liquibase saw these new files in the master and tried to run them.
-  FIX: Update the DB with the new changelogs names.
-- 
+- ERROR: Book table already exists  
+  EXPLANATION: I changed the liquibase script file names which created the book table.  
+               Liquibase saw these new files in the master and tried to run them.  
+  FIX: Update the DB with the new changelogs names.  
+  ```sql
+  SET SQL_SAFE_UPDATES = 0;
+  UPDATE bookdb.databasechangelog
+  SET FILENAME = 'db/changelog/changelog-v2-init-hibernate.xml'
+  WHERE FILENAME = 'db/changelog/init-hibernate.xml';
+  SET SQL_SAFE_UPDATES = 1;
+  ```
+
+#### Flyway 
+- org.flywaydb.flyway-core 
+- baseline command is used to migrate an existing db to flyway.
+- config:
+  - spring.flyway.user
+  - spring.flyway.password
+- resources/db/migration/V1__<description>.sql, V2__<description>.sql, V3__<description>.sql
+
+#### Spring Web
+- @RunWith(SpringRunner.class)  
+  @SpringBootTest  
+  Brings up spring context therefore it's an Integration test not a unit test. 
+- @ResponseCode()
+- etc.
+
+#### Dependency Injection
+- Field DI:
+  - Don't make Service field in the controller private, as you won't be able to unit test it.
+- Constructor DI:
+  - Best
+  - Can pass in mocked object(service) to the controller for testing.
+  - can make parameter to constructor private & final.
+  - So that the dependency cannot be changed.
+- Setter based DI:
+  - Has its downsides as you can instantiate the class without setting the service dependency:  
+    Leading to an invalid state.
+  - Can also set the service at runtime which could be problematic.
+
+Should program service against an interface in order to write test implementation which may be a mock or something else.
+
+
+#### Primary Key generation
+- UUID 
+- Long
+- @Id @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
+  - SEQUENCE
+  - TABLE
+  - AUTO - let hibernate decide
+  - IDENTITY

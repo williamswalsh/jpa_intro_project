@@ -7,5 +7,6 @@
     <include file="db/changelog/changelog-v1-create-book.xml"/>
     <include file="db/changelog/changelog-v2-init-hibernate.xml"/>
     <include file="db/changelog/changelog-v3-create-author.xml"/>
+    <include file="db/changelog/changelog-v4-add-author-id.xml"/>
 
 </databaseChangeLog>

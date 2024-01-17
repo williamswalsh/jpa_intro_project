@@ -34,7 +34,7 @@ public class SpringBootJpaTestSliceWithDataInitializer {
     @Test
     void testJpaSlice() {
         long countBefore = bookRepository.count();
-        bookRepository.save(new Book("Chat GPT", "7867544", "John Doe"));
+        bookRepository.save(new Book("Chat GPT", "7867544", "John Doe", null));
         long countAfter = bookRepository.count();
 
         // Command line runner doesn't execute with @DataJpaTest - does execute for @SpringBootTest
