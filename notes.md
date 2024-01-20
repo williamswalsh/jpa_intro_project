@@ -211,9 +211,9 @@ class
 #### H2 MySql compatibility mode
 - Can enable H2 to behave like mysql.
 
-#### schema.sql
+#### V1__init_db.sql
 - file in classpath(resources) will be executed to setup db.
-- hibernate can initialise the db using a schema.sql file in the classpath - hibernate executes the script
+- hibernate can initialise the db using a V1__init_db.sql file in the classpath - hibernate executes the script
 
 #### liquibase
 - migration - moving code from one system to another
@@ -288,4 +288,24 @@ Should program service against an interface in order to write test implementatio
   - SEQUENCE
   - TABLE
   - AUTO - let hibernate decide
-  - IDENTITY
+  - IDENTITY - rely on DB to increment id value - efficient
+- Using IDENTITY for mysql dbs better than using sequence as the sequence table needs to be locked which could slow db additions to the book table.
+```xml
+<!--Liquibase table definition-->
+<column name="id" type="BIGINT" autoIncrement="true">
+  <constraints nullable="false" primaryKey="true"/>
+</column>
+
+<!--Or you can alter an existing table to be auto_increment-->
+<changeSet author="William Walsh" id="8">
+    <sql>alter table book change id id BIGINT auto_increment</sql>
+</changeSet>
+```
+
+#### Run config profile
+This will take the property config that is specified in the application-XXXXX.properties file.  
+-Dspring.profiles.active=local,clean  
+application-local.properties - local config  
+application-clean.properties - cleans the schema  
+
+

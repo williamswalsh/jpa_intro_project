@@ -7,11 +7,8 @@ import java.util.Objects;
 @Entity
 public class Book {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "book_seq")
-    @SequenceGenerator(name = "book_seq", sequenceName = "book_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String title;
     private String isbn;

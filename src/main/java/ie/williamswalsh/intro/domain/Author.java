@@ -7,11 +7,8 @@ import java.util.Objects;
 @Entity
 public class Author {
 
-//    @Id
-//    @GeneratedValue(strategy = GenerationType.AUTO)
     @Id
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "author_seq")
-    @SequenceGenerator(name = "author_seq", sequenceName = "author_seq", allocationSize = 1)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
