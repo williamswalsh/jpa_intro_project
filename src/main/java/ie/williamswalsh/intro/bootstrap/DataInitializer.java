@@ -1,7 +1,11 @@
 package ie.williamswalsh.intro.bootstrap;
 
+import ie.williamswalsh.intro.domain.AuthorUuid;
 import ie.williamswalsh.intro.domain.Book;
+import ie.williamswalsh.intro.domain.BookUuid;
+import ie.williamswalsh.intro.repositories.AuthorUuidRepository;
 import ie.williamswalsh.intro.repositories.BookRepository;
+import ie.williamswalsh.intro.repositories.BookUuidRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Component;
@@ -15,8 +19,14 @@ public class DataInitializer implements CommandLineRunner {
 
     private final BookRepository bookRepository;
 
-    public DataInitializer(BookRepository bookRepository) {
+    private final AuthorUuidRepository authorUuidRepository;
+
+    private final BookUuidRepository bookUuidRepository;
+
+    public DataInitializer(BookRepository bookRepository, AuthorUuidRepository authorUuidRepository, BookUuidRepository bookUuidRepository) {
         this.bookRepository = bookRepository;
+        this.authorUuidRepository = authorUuidRepository;
+        this.bookUuidRepository = bookUuidRepository;
     }
 
     @Override
@@ -38,5 +48,17 @@ public class DataInitializer implements CommandLineRunner {
             System.out.print("ID: " + book.getId());
             System.out.println(", Title: " + book.getTitle());
         });
+
+        AuthorUuid authorUuid = new AuthorUuid();
+        authorUuid.setFirstName("John");
+        authorUuid.setLastName("Doe");
+
+        AuthorUuid savedAuthorUuid = authorUuidRepository.save(authorUuid);
+        System.out.println("Author Saved UUID: " + savedAuthorUuid.getId());
+
+        BookUuid bookUuid = new BookUuid();
+        bookUuid.setTitle("RFC compliant UUID");
+        BookUuid savedBookUuid = bookUuidRepository.save(bookUuid);
+        System.out.println("Book saved UUID: " + savedBookUuid.getId());
     }
 }

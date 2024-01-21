@@ -13,7 +13,7 @@
 - Hibernate is an implementation of JPA
 - Hibernate ORM - Data Mapper
 - mapping from Objects to Tables and vice versa.
-- Hibernate stull uses JDBC to communicate with the database.
+- Hibernate still uses JDBC to communicate with the database.
 - Hibernate creates all the SQL expressions to create the tables.
 
 #### SQL
