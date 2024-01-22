@@ -17,7 +17,7 @@ public class BookUuid {
 //    Need to execute:
 //    select hex(id) FROM bookdb.book_uuid; -> missing dashes ****NB****
     @Id
-    @GeneratedValue(generator = "uuid2")
+    @GeneratedValue(generator = "uuid2")    // NB: The underlying db will generate the id value of type uuid.
     @GenericGenerator(name = "uuid2", strategy = "uuid2")
     @Column(columnDefinition = "VARBINARY(16)", updatable = false, nullable = false)
     private UUID id;
