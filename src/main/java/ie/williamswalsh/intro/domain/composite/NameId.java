@@ -1,10 +1,13 @@
 package ie.williamswalsh.intro.domain.composite;
 
+import jakarta.persistence.Embeddable;
+
 import java.io.Serializable;
 import java.util.Objects;
 
 //Composite keys require a class to define its members.
 //Must be serializable & must implement equals & hashCode.
+@Embeddable // This states that NameId can be used as an embeddedId inside another class.
 public class NameId implements Serializable {
     private String firstName;
     private String lastName;

@@ -2,8 +2,10 @@ package ie.williamswalsh.intro;
 
 import ie.williamswalsh.intro.domain.BookNatural;
 import ie.williamswalsh.intro.domain.composite.AuthorComposite;
+import ie.williamswalsh.intro.domain.composite.AuthorEmbedded;
 import ie.williamswalsh.intro.domain.composite.NameId;
 import ie.williamswalsh.intro.repositories.AuthorCompositeRepository;
+import ie.williamswalsh.intro.repositories.AuthorEmbeddedRepository;
 import ie.williamswalsh.intro.repositories.BookNaturalRepository;
 import ie.williamswalsh.intro.repositories.BookRepository;
 import org.junit.jupiter.api.Test;
@@ -29,6 +31,9 @@ public class MySqlIntegrationTest {
 
     @Autowired
     AuthorCompositeRepository authorCompositeRepository;
+
+    @Autowired
+    AuthorEmbeddedRepository authorEmbeddedRepository;
 
     @Test
     void testMySql() {
@@ -56,5 +61,15 @@ public class MySqlIntegrationTest {
         NameId id = new NameId(author.getFirstName(), author.getLastName());
         AuthorComposite fetched = authorCompositeRepository.getReferenceById(id);
         assertThat(fetched).isNotNull();
+    }
+
+    @Test
+    void authorEmbeddedCompositeKeyTest() {
+        NameId lewisCarroll = new NameId("Lewis", "Carroll");
+        AuthorEmbedded author = new AuthorEmbedded(lewisCarroll);
+
+        AuthorEmbedded saved = authorEmbeddedRepository.save(author);
+        AuthorEmbedded fetched = authorEmbeddedRepository.getReferenceById(lewisCarroll);
+        assertThat(saved).isEqualTo(fetched);
     }
 }

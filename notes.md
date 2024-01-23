@@ -308,4 +308,20 @@ This will take the property config that is specified in the application-XXXXX.pr
 application-local.properties - local config  
 application-clean.properties - cleans the schema  
 
+#### DAO
+- Data Access Object
+- Old pattern - before ORMs
+- Similar to Repository
+- Purpose: isolate persistence layer from app
+- DAO patterns don't use JPA annotations
 
+#### JDBC 
+- have to create and manage the connection - pooling etc.
+- Spring Data JPA handles all this without any input
+- Spring has JdbcTemplate to work with JDBC
+
+#### Component Scan vs Import
+- @ComponentScan(basePackages = {"ie.williamswalsh.jdbc_project.dao"})  
+  can add a package to scan for components that you want to include in a @DataJpaTest.  
+  Best practice is to scan only small packages otherwise testing time increases.
+- Can import a component directly by using this: @Import(AuthorDaoImpl.class)
